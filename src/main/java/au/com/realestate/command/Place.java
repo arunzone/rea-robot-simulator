@@ -13,6 +13,8 @@ public class Place {
   }
 
   public void execute() {
-    context.setPosition(position);
+    if (context.getBoundary().getX() >= position.getCoordinates().getX()) {
+      context.setPosition(position);
+    }
   }
 }
