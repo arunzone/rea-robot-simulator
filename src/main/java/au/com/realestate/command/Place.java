@@ -13,7 +13,9 @@ public class Place {
   }
 
   public void execute() {
-    if (context.getBoundary().getX() >= position.getCoordinates().getX()) {
+    boolean safeXAxis = context.getBoundary().getX() >= position.getCoordinates().getX();
+    boolean safeYAxis = context.getBoundary().getY() >= position.getCoordinates().getY();
+    if (safeXAxis && safeYAxis) {
       context.setPosition(position);
     }
   }

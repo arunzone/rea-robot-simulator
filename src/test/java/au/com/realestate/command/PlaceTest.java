@@ -36,4 +36,16 @@ class PlaceTest {
     assertThat(context.getPosition(), is(nullValue()));
   }
 
+  @Test
+  void shouldIgnorePlacementOfRobotOutsideYAxisBoundary() {
+    Coordinates coordinates = new Coordinates(2, 8);
+    Position position = Position.of(coordinates, Direction.EAST);
+    Context context = Context.of(new Coordinates(5, 5));
+    Place place = new Place(position, context);
+
+    place.execute();
+
+    assertThat(context.getPosition(), is(nullValue()));
+  }
+
 }
