@@ -7,13 +7,15 @@ import au.com.realestate.entity.Position;
 
 public class CommandFactory {
   private final Context context;
+  private final Report report;
 
-  public CommandFactory(Context context) {
+  public CommandFactory(Context context, Report report) {
     this.context = context;
+    this.report = report;
   }
 
   public Command commandFor(String input) {
-    if(input.startsWith("PLACE")){
+    if (input.trim().startsWith("PLACE")) {
       String positionArgumentText = input.split(" ")[1];
       String[] positionArguments = positionArgumentText.split(",");
 
@@ -22,6 +24,10 @@ public class CommandFactory {
       Direction direction = Direction.valueOf(positionArguments[2]);
       Coordinates coordinates = new Coordinates(x, y);
       return new Place(Position.of(coordinates, direction), context);
+    }
+
+    if (input.trim().equals("REPORT")) {
+      return report;
     }
     return null;
   }

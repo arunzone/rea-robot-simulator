@@ -4,31 +4,40 @@ import au.com.realestate.entity.Context;
 import au.com.realestate.entity.Coordinates;
 import au.com.realestate.entity.Direction;
 import au.com.realestate.entity.Position;
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.mockito.Mockito.mock;
 
 class CommandFactoryTest {
+  private final Context context = Context.of(new Coordinates(1, 2));
 
   @Test
   void shouldReturnPlaceCommand() {
-    Context context = Context.of(new Coordinates(1, 2));
-    CommandFactory commandFactory = new CommandFactory(context);
+    CommandFactory commandFactory = new CommandFactory(context, null);
     Command command = commandFactory.commandFor("PLACE 1,2,EAST");
 
     Position position = Position.of(new Coordinates(1, 2), Direction.EAST);
-    MatcherAssert.assertThat(command, is(equalTo(new Place(position, context))));
+    assertThat(command, is(equalTo(new Place(position, context))));
   }
 
   @Test
   void shouldReturnNullForInvalidCommand() {
-    Context context = Context.of(new Coordinates(1, 2));
-    CommandFactory commandFactory = new CommandFactory(context);
+    CommandFactory commandFactory = new CommandFactory(context, null);
     Command command = commandFactory.commandFor("SET 1,2,EAST");
 
-    MatcherAssert.assertThat(command, is(nullValue()));
+    assertThat(command, is(nullValue()));
+  }
+
+  @Test
+  void shouldReturnReportCommand() {
+    Report report = mock(Report.class);
+    CommandFactory commandFactory = new CommandFactory(context, report);
+    Command command = commandFactory.commandFor("REPORT");
+
+    assertThat(command, is(report));
   }
 }
