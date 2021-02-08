@@ -7,8 +7,9 @@ import au.com.realestate.entity.Position;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.samePropertyValuesAs;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.mock;
 
@@ -27,17 +28,17 @@ class CommandFactoryTest {
   @Test
   void shouldReturnNullForInvalidCommand() {
     CommandFactory commandFactory = new CommandFactory(context, null);
-    Command command = commandFactory.commandFor("SET 1,2,EAST");
+    Command command = commandFactory.commandFor("UNKNOWN 1,2,EAST");
 
-    assertThat(command, is(nullValue()));
+    assertThat(command, is(notNullValue()));
   }
 
   @Test
   void shouldReturnReportCommand() {
-    Report report = mock(Report.class);
+    au.com.realestate.report.Report report = mock(au.com.realestate.report.Report.class);
     CommandFactory commandFactory = new CommandFactory(context, report);
     Command command = commandFactory.commandFor("REPORT");
 
-    assertThat(command, is(report));
+    assertThat(command, is(samePropertyValuesAs(new Report(context, report))));
   }
 }

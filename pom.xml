@@ -165,7 +165,6 @@
                 <rule>
                   <element>CLASS</element>
                   <excludes>
-                    <exclude>au.com.realestate.App</exclude>
                     <exclude>au.com.realestate.entity.*</exclude>
                   </excludes>
                   <limits>
