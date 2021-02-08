@@ -15,6 +15,7 @@ public class Move implements Command {
   private final Map<Direction, Consumer<Coordinates>> moveRegistry = Map.ofEntries(
       entry(Direction.NORTH, this::moveNorth),
       entry(Direction.SOUTH, this::moveSouth),
+      entry(Direction.WEST, this::moveWest),
       entry(Direction.EAST, this::moveEast)
   );
 
@@ -28,7 +29,6 @@ public class Move implements Command {
       Direction direction = position.getDirection();
       moveRegistry.get(direction).accept(position.getCoordinates());
     }
-
   }
 
   private void moveNorth(Coordinates coordinates) {
@@ -49,6 +49,13 @@ public class Move implements Command {
     int x = coordinates.getX();
     if (context.getBoundary().getX() > x) {
       coordinates.setX(x + 1);
+    }
+  }
+
+  private void moveWest(Coordinates coordinates) {
+    int x = coordinates.getX();
+    if (x > 0) {
+      coordinates.setX(x - 1);
     }
   }
 

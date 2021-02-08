@@ -2,9 +2,7 @@ package au.com.realestate.command;
 
 import au.com.realestate.entity.Context;
 import au.com.realestate.entity.Position;
-import lombok.EqualsAndHashCode;
 
-@EqualsAndHashCode
 public class Place implements Command{
   private final Position position;
   private final Context context;

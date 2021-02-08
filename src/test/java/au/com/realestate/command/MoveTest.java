@@ -66,7 +66,7 @@ class MoveTest {
   }
 
   @Test
-  void shouldIncrementXIfFacingSouth() {
+  void shouldIDecrementYIfFacingSouth() {
     Context context = Context.of(new Coordinates(5, 5));
     context.setPosition(Position.of(new Coordinates(0, 1), Direction.SOUTH));
     Move move = new Move(context);
@@ -77,7 +77,7 @@ class MoveTest {
   }
 
   @Test
-  void shouldNotDecrementXWhenReachedBoundary() {
+  void shouldNotDecrementYWhenReachedBoundary() {
     Context context = Context.of(new Coordinates(1, 1));
     context.setPosition(Position.of(new Coordinates(1, 0), Direction.SOUTH));
     Move move = new Move(context);
@@ -85,6 +85,28 @@ class MoveTest {
     move.execute();
 
     assertThat(context.getPosition(), is(Position.of(new Coordinates(1, 0), Direction.SOUTH)));
+  }
+
+  @Test
+  void shouldDecrementXIfFacingWest() {
+    Context context = Context.of(new Coordinates(5, 5));
+    context.setPosition(Position.of(new Coordinates(1, 0), Direction.WEST));
+    Move move = new Move(context);
+
+    move.execute();
+
+    assertThat(context.getPosition(), is(Position.of(new Coordinates(0, 0), Direction.WEST)));
+  }
+
+  @Test
+  void shouldNotDecrementXWhenReachedBoundary() {
+    Context context = Context.of(new Coordinates(1, 1));
+    context.setPosition(Position.of(new Coordinates(0, 1), Direction.WEST));
+    Move move = new Move(context);
+
+    move.execute();
+
+    assertThat(context.getPosition(), is(Position.of(new Coordinates(0, 1), Direction.WEST)));
   }
 
 }

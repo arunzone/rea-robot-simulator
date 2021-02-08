@@ -5,6 +5,7 @@ import au.com.realestate.entity.Coordinates;
 import au.com.realestate.entity.Direction;
 import au.com.realestate.entity.Position;
 
+import java.io.PrintStream;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -15,6 +16,7 @@ public class CommandFactory {
   private final au.com.realestate.report.Report report;
   private final Map<String, Function<String, Command>> commandRegistry = Map.ofEntries(
       entry("PLACE", this::placeFrom),
+      entry("MOVE", input -> move()),
       entry("REPORT", input -> report())
   );
 
@@ -25,10 +27,14 @@ public class CommandFactory {
 
   public Command commandFor(String input) {
     String command = input.split(" ")[0];
-    if(commandRegistry.containsKey(command)) {
+    if (commandRegistry.containsKey(command)) {
       return commandRegistry.get(command).apply(input);
     }
-    return () -> System.out.printf("Invalid command: %s\n", input);
+    return () -> print(input);
+  }
+
+  private PrintStream print(String input) {
+    return System.out.printf("Invalid command: %s\n", input);
   }
 
   private Place placeFrom(String input) {
@@ -42,8 +48,11 @@ public class CommandFactory {
     return new Place(Position.of(coordinates, direction), context);
   }
 
-  private Command report(){
+  private Command report() {
     return new Report(context, report);
   }
 
+  private Command move() {
+    return new Move(context);
+  }
 }

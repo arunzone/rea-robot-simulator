@@ -6,8 +6,7 @@ import au.com.realestate.entity.Direction;
 import au.com.realestate.entity.Position;
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static com.github.stefanbirkner.systemlambda.SystemLambda.tapSystemOut;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.samePropertyValuesAs;
 import static org.hamcrest.core.Is.is;
@@ -22,15 +21,18 @@ class CommandFactoryTest {
     Command command = commandFactory.commandFor("PLACE 1,2,EAST");
 
     Position position = Position.of(new Coordinates(1, 2), Direction.EAST);
-    assertThat(command, is(equalTo(new Place(position, context))));
+    assertThat(command, is(samePropertyValuesAs(new Place(position, context))));
   }
 
   @Test
-  void shouldReturnNullForInvalidCommand() {
+  void shouldDisplayMessageForInvalidCommand() throws Exception {
     CommandFactory commandFactory = new CommandFactory(context, null);
     Command command = commandFactory.commandFor("UNKNOWN 1,2,EAST");
+    String text = tapSystemOut(() -> {
+      command.execute();
+    });
 
-    assertThat(command, is(notNullValue()));
+    assertThat(text, is("Invalid command: UNKNOWN 1,2,EAST\n"));
   }
 
   @Test
@@ -40,5 +42,13 @@ class CommandFactoryTest {
     Command command = commandFactory.commandFor("REPORT");
 
     assertThat(command, is(samePropertyValuesAs(new Report(context, report))));
+  }
+
+  @Test
+  void shouldReturnMoveCommand() {
+    CommandFactory commandFactory = new CommandFactory(context, null);
+    Command command = commandFactory.commandFor("MOVE");
+
+    assertThat(command, is(samePropertyValuesAs(new Move(context))));
   }
 }
