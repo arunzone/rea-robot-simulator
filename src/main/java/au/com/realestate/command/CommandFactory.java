@@ -13,15 +13,14 @@ import static java.util.Map.entry;
 public class CommandFactory {
   private final Context context;
   private final au.com.realestate.report.Report report;
-  private final Map<String, Function<String, Command>> commandRegistry;
+  private final Map<String, Function<String, Command>> commandRegistry = Map.ofEntries(
+      entry("PLACE", this::placeFrom),
+      entry("REPORT", input -> report())
+  );
 
   public CommandFactory(Context context, au.com.realestate.report.Report report) {
     this.context = context;
     this.report = report;
-    commandRegistry = Map.ofEntries(
-        entry("PLACE", this::placeFrom),
-        entry("REPORT", input -> report())
-    );
   }
 
   public Command commandFor(String input) {
