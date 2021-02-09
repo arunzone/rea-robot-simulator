@@ -15,8 +15,10 @@ class CommandServiceTest {
   void shouldGetAllCommands() {
     List<String> allCommands = List.of();
     CommandRepository commandRepository = mock(CommandRepository.class);
+    CommandFilter commandFilter = mock(CommandFilter.class);
     when(commandRepository.read()).thenReturn(allCommands);
-    CommandService commandService = new CommandService(commandRepository);
+    when(commandFilter.filterValid(allCommands)).thenReturn(allCommands);
+    CommandService commandService = new CommandService(commandRepository, commandFilter);
 
     List<String> commands = commandService.getAllCommands();
 

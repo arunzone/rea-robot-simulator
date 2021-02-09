@@ -148,11 +148,11 @@
             <goals>
               <goal>report</goal>
             </goals>
-<!--            <configuration>-->
-<!--              <excludes>-->
-<!--                <exclude>**/ClassName.*</exclude>-->
-<!--              </excludes>-->
-<!--            </configuration>-->
+            <configuration>
+              <excludes>
+                <exclude>**/entity/*</exclude>
+              </excludes>
+            </configuration>
           </execution>
           <!-- Threshold -->
           <execution>

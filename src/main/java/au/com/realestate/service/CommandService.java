@@ -6,13 +6,15 @@ import java.util.List;
 
 public class CommandService {
   private final CommandRepository commandRepository;
+  private final CommandFilter commandFilter;
 
-  public CommandService(CommandRepository commandRepository) {
-
+  public CommandService(CommandRepository commandRepository, CommandFilter commandFilter) {
     this.commandRepository = commandRepository;
+    this.commandFilter = commandFilter;
   }
 
   public List<String> getAllCommands() {
-    return commandRepository.read();
+    List<String> commands = commandRepository.read();
+    return commandFilter.filterValid(commands);
   }
 }

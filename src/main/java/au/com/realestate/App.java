@@ -6,15 +6,27 @@ import au.com.realestate.entity.Context;
 import au.com.realestate.entity.Coordinates;
 import au.com.realestate.report.ConsoleReport;
 import au.com.realestate.repository.FileRepository;
+import au.com.realestate.service.CommandFilter;
 import au.com.realestate.service.CommandService;
+
+import java.util.List;
 
 public class App {
     public static void main(String[] args) {
+        CommandFactory commandFactory = getCommandFactory();
+        commandInputs().forEach(command ->
+            commandFactory.commandFor(command).execute());
+    }
+
+    private static CommandFactory getCommandFactory() {
         Context context = Context.of(new Coordinates(5, 5));
-        CommandService service =  new CommandService(new FileRepository(null));
         ConsoleReport consoleReport = new ConsoleReport();
         PlaceGenerator placeGenerator = new PlaceGenerator(context);
-        CommandFactory commandFactory = new CommandFactory(context, consoleReport, placeGenerator);
-        service.getAllCommands().forEach( command -> commandFactory.commandFor(command).execute());
+        return new CommandFactory(context, consoleReport, placeGenerator);
+    }
+
+    private static List<String> commandInputs() {
+        CommandService service = new CommandService(new FileRepository(null), new CommandFilter());
+        return service.getAllCommands();
     }
 }
