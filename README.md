@@ -15,6 +15,11 @@ maven 3.6.2 Jdk 14
 
 ![Design Diagram](design/all.png) is available as `Design.drawio` which can be opened in https://app.diagrams.net/ using "Open Existing Diagram" option in landing page
 
+
+### Code coverage
+![Design Diagram](design/Code_coverage.png)
+Entity objects are excluded from the report.
+
 ---
 ## How to use?
 
