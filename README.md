@@ -81,6 +81,7 @@ Code coverage report is available in
 <blockquote>
 target/site/jacoco/index.html
 </blockquote>
+Report will be available after running test.
 
 ---
 
