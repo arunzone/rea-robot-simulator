@@ -13,9 +13,13 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) {
-        CommandFactory commandFactory = getCommandFactory();
-        commandInputs().forEach(command ->
-            commandFactory.commandFor(command).execute());
+        try {
+            CommandFactory commandFactory = getCommandFactory();
+            commandInputs().forEach(command ->
+                commandFactory.commandFor(command).execute());
+        }catch (Exception exception){
+            System.out.println(exception.getMessage());
+        }
     }
 
     private static CommandFactory getCommandFactory() {

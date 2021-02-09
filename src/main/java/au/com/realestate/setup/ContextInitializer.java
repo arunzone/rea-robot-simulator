@@ -7,9 +7,9 @@ import java.util.regex.Pattern;
 
 public class ContextInitializer {
 
-  public static final String X = "X";
-  public static final String Y = "Y";
-  Pattern integerPattern = Pattern.compile("\\d+");
+  private static final String X = "X";
+  private static final String Y = "Y";
+  private final Pattern integerPattern = Pattern.compile("\\d+");
 
   public Context context() {
     Integer defaultSize = 10;
