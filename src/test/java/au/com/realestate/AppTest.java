@@ -14,9 +14,9 @@ public class AppTest
     @Test
     public void shouldDisplayPlacedStateInConsole() throws Exception {
         String text = tapSystemOut(() -> {
-            new App().main(new String[]{"PLACE 1,2,EAST", "REPORT"});
+            new App().main(new String[]{});
         });
 
-        assertThat(text, is("Expected output\n\t1,2,EAST"));
+        assertThat(text, is("Expected output\n\t3,3,NORTH"));
     }
 }
