@@ -4,6 +4,17 @@
 
 maven 3.6.2 Jdk 14
 
+## Design thoughts
+* In high level the application is designed by splitting it to read input and process/execute the commands and displaying output.
+* Input is read from a repository which is flexible enough to extend it to read input from any other sources.
+* Read input is filtered in service where the command list is filtered to have only valid commands to execute.
+* Retrieved list of commands from service is parsed by command factory to produce relevant command, which is executed .
+* Command factory is also extensible to add new commands, each command encapsulates its own behaviourI
+* Input file for commands, and the board size are configurable through environment variables.
+* Exception are thrown from different layers, which are handled in App level to display relevant error message.
+
+![Design Diagram](design/all.png) is available as `Design.drawio` which can be opened in https://app.diagrams.net/ using "Open Existing Diagram" option in landing page
+
 ---
 ## How to use?
 
