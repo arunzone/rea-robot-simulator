@@ -7,8 +7,6 @@ import lombok.NonNull;
 @AllArgsConstructor
 @Data
 public class Coordinates {
-  @NonNull
-  private int x;
-  @NonNull
-  private int y;
+  private @NonNull Integer x;
+  private @NonNull Integer y;
 }

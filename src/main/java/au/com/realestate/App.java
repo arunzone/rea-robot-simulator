@@ -3,11 +3,11 @@ package au.com.realestate;
 import au.com.realestate.command.factory.CommandFactory;
 import au.com.realestate.command.factory.PlaceGenerator;
 import au.com.realestate.entity.Context;
-import au.com.realestate.entity.Coordinates;
 import au.com.realestate.report.ConsoleReport;
 import au.com.realestate.repository.FileRepository;
 import au.com.realestate.service.CommandFilter;
 import au.com.realestate.service.CommandService;
+import au.com.realestate.setup.ContextInitializer;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class App {
     }
 
     private static CommandFactory getCommandFactory() {
-        Context context = Context.of(new Coordinates(5, 5));
+        Context context = new ContextInitializer().context();
         ConsoleReport consoleReport = new ConsoleReport();
         PlaceGenerator placeGenerator = new PlaceGenerator(context);
         return new CommandFactory(context, consoleReport, placeGenerator);
