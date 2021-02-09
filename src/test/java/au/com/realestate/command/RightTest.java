@@ -9,52 +9,53 @@ import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-class LeftTest {
+class RightTest {
   private final Context context = Context.of(new Coordinates(2, 2));
   private final Coordinates coordinates = new Coordinates(1, 1);
 
   @Test
-  void shouldTurnLeftFromNorthToWest() {
+  void shouldTurnRightFromNorthToEast() {
     context.setPosition(Position.of(coordinates, Direction.NORTH));
-    Left left = new Left(context);
+    Right right = new Right(context);
 
-    left.execute();
-
-    Position position = Position.of(coordinates, Direction.WEST);
-    assertThat(context.getPosition(), is(position));
-  }
-
-  @Test
-  void shouldTurnLeftFromWestToSouth() {
-    context.setPosition(Position.of(coordinates, Direction.WEST));
-    Left left = new Left(context);
-
-    left.execute();
-
-    Position position = Position.of(coordinates, Direction.SOUTH);
-    assertThat(context.getPosition(), is(position));
-  }
-
-  @Test
-  void shouldTurnLeftFromSouthToEast() {
-    context.setPosition(Position.of(coordinates, Direction.SOUTH));
-    Left left = new Left(context);
-
-    left.execute();
+    right.execute();
 
     Position position = Position.of(coordinates, Direction.EAST);
     assertThat(context.getPosition(), is(position));
   }
 
   @Test
-  void shouldTurnLeftFromEastToNorth() {
-    context.setPosition(Position.of(coordinates, Direction.EAST));
-    Left left = new Left(context);
+  void shouldTurnRightFromWestToNorth() {
+    context.setPosition(Position.of(coordinates, Direction.WEST));
+    Right right = new Right(context);
 
-    left.execute();
+    right.execute();
 
     Position position = Position.of(coordinates, Direction.NORTH);
     assertThat(context.getPosition(), is(position));
   }
+
+  @Test
+  void shouldTurnRightFromSouthToWest() {
+    context.setPosition(Position.of(coordinates, Direction.SOUTH));
+    Right right = new Right(context);
+
+    right.execute();
+
+    Position position = Position.of(coordinates, Direction.WEST);
+    assertThat(context.getPosition(), is(position));
+  }
+
+  @Test
+  void shouldTurnRightFromEastToSouth() {
+    context.setPosition(Position.of(coordinates, Direction.EAST));
+    Right right = new Right(context);
+
+    right.execute();
+
+    Position position = Position.of(coordinates, Direction.SOUTH);
+    assertThat(context.getPosition(), is(position));
+  }
+
 
 }

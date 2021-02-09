@@ -4,6 +4,7 @@ import au.com.realestate.command.Command;
 import au.com.realestate.command.Left;
 import au.com.realestate.command.Move;
 import au.com.realestate.command.Report;
+import au.com.realestate.command.Right;
 import au.com.realestate.command.factory.exception.InvalidCommandException;
 import au.com.realestate.entity.Context;
 
@@ -21,6 +22,7 @@ public class CommandFactory {
       entry("PLACE", this::placeFrom),
       entry("MOVE", input -> move()),
       entry("LEFT", input -> left()),
+      entry("RIGHT", input -> right()),
       entry("REPORT", input -> report())
   );
 
@@ -52,5 +54,9 @@ public class CommandFactory {
 
   private Command left() {
     return new Left(context);
+  }
+
+  private Command right() {
+    return new Right(context);
   }
 }

@@ -5,6 +5,7 @@ import au.com.realestate.command.Left;
 import au.com.realestate.command.Move;
 import au.com.realestate.command.Place;
 import au.com.realestate.command.Report;
+import au.com.realestate.command.Right;
 import au.com.realestate.command.factory.exception.InvalidCommandException;
 import au.com.realestate.entity.Context;
 import au.com.realestate.entity.Coordinates;
@@ -63,5 +64,13 @@ class CommandFactoryTest {
     Command command = commandFactory.commandFor("LEFT");
 
     assertThat(command, is(samePropertyValuesAs(new Left(context))));
+  }
+
+  @Test
+  void shouldReturnRightCommand() {
+    CommandFactory commandFactory = new CommandFactory(context, null, null);
+    Command command = commandFactory.commandFor("RIGHT");
+
+    assertThat(command, is(samePropertyValuesAs(new Right(context))));
   }
 }
