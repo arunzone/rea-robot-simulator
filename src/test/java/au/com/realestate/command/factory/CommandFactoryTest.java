@@ -1,6 +1,7 @@
 package au.com.realestate.command.factory;
 
 import au.com.realestate.command.Command;
+import au.com.realestate.command.Left;
 import au.com.realestate.command.Move;
 import au.com.realestate.command.Place;
 import au.com.realestate.command.Report;
@@ -54,5 +55,13 @@ class CommandFactoryTest {
     Command command = commandFactory.commandFor("MOVE");
 
     assertThat(command, is(samePropertyValuesAs(new Move(context))));
+  }
+
+  @Test
+  void shouldReturnLeftCommand() {
+    CommandFactory commandFactory = new CommandFactory(context, null, null);
+    Command command = commandFactory.commandFor("LEFT");
+
+    assertThat(command, is(samePropertyValuesAs(new Left(context))));
   }
 }

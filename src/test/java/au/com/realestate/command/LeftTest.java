@@ -4,15 +4,14 @@ import au.com.realestate.entity.Context;
 import au.com.realestate.entity.Coordinates;
 import au.com.realestate.entity.Direction;
 import au.com.realestate.entity.Position;
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 class LeftTest {
-  private Context context = Context.of(new Coordinates(2, 2));
-  private Coordinates coordinates = new Coordinates(1, 1);
+  private final Context context = Context.of(new Coordinates(2, 2));
+  private final Coordinates coordinates = new Coordinates(1, 1);
 
   @Test
   void shouldTurnLeftFromNorthToWest() {

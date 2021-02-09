@@ -1,6 +1,7 @@
 package au.com.realestate.command.factory;
 
 import au.com.realestate.command.Command;
+import au.com.realestate.command.Left;
 import au.com.realestate.command.Move;
 import au.com.realestate.command.Report;
 import au.com.realestate.command.factory.exception.InvalidCommandException;
@@ -19,6 +20,7 @@ public class CommandFactory {
   private final Map<String, Function<String, Command>> commandRegistry = Map.ofEntries(
       entry("PLACE", this::placeFrom),
       entry("MOVE", input -> move()),
+      entry("LEFT", input -> left()),
       entry("REPORT", input -> report())
   );
 
@@ -46,5 +48,9 @@ public class CommandFactory {
 
   private Command move() {
     return new Move(context);
+  }
+
+  private Command left() {
+    return new Left(context);
   }
 }

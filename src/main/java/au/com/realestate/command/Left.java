@@ -1,12 +1,10 @@
 package au.com.realestate.command;
 
 import au.com.realestate.entity.Context;
-import au.com.realestate.entity.Coordinates;
 import au.com.realestate.entity.Direction;
 import au.com.realestate.entity.Position;
 
 import java.util.Map;
-import java.util.function.Consumer;
 
 import static java.util.Map.entry;
 
