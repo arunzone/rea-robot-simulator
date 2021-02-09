@@ -7,6 +7,54 @@ maven 3.6.2 Jdk 14
 ---
 ## How to use?
 
+### Run Application
+if maven and java14 are available in machine
+<blockquote>
+mvn compile exec:java -Dexec.mainClass="au.com.realestate.App"
+</blockquote>
+otherwise (using docker)  
+<blockquote>
+docker run -v "$PWD:/home" -w /home -it maven:3.6.3-adoptopenjdk-14 bash  
+
+mvn compile exec:java -Dexec.mainClass="au.com.realestate.App"
+</blockquote>
+
+#### Customize input
+
+By default, it uses input files from test resources, it can be overridden by environment variables
+1. Board size - default 10 x 10
+2. Input file - src/test/resources/input.txt  
+   Variable names
+   * `X` for x-axis e.g. `export X=5`  
+   * `Y` for y-axis e.g. `export Y=5`  
+   * `INPUT_FILE` for file location with path and name e.g `export INPUT_FILE=/home/sample.txt`  
+_Note_: if `Y` is not provided it will use `X` value to create square board size 
+     clear environment variable at any time
+
+<blockquote>
+unset X
+unset Y
+unset INPUT_FILE
+</blockquote>
+
+##### Run application
+if maven and java14 are available in machine  
+Input file can be mentioned using absolute path(`/Users/xxx/yyy.txt`)     
+<blockquote>
+export X=5 && export INPUT_FILE=/Users/xxx/yyy.txt && mvn compile exec:java -Dexec.mainClass="au.com.realestate.App"
+</blockquote>
+
+otherwise (using docker)  
+current working directory is mounted as `/home`, probably easy way to give custom input file is copying into source code location and path can be provided as `-DINPUT_FILE=/home/yyy.txt` 
+
+<blockquote>
+docker run -v "$PWD:/home" -w /home -it maven:3.6.3-adoptopenjdk-14 bash  
+
+export X=5 && export INPUT_FILE=/home/yyy.txt mvn compile exec:java -Dexec.mainClass="au.com.realestate.App" -DX=5 -DINPUT_FILE=/home/yyy.txt
+</blockquote>
+
+
+
 ### Run test
 <blockquote>
 mvn clean verify

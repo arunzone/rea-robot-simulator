@@ -57,4 +57,15 @@ class ContextInitializerTest {
     Context expectedContext = Context.of(new Coordinates(4, 8));
     assertThat(context, is(samePropertyValuesAs(expectedContext)));
   }
+
+  @Test
+  void shouldReturnDefaultSizeForNonNumber() {
+    environmentVariables.set("X", "A");
+    environmentVariables.set("Y", "B");
+    ContextInitializer contextInitializer = new ContextInitializer();
+    Context context = contextInitializer.context();
+
+    Context expectedContext = Context.of(new Coordinates(10, 10));
+    assertThat(context, is(samePropertyValuesAs(expectedContext)));
+  }
 }
