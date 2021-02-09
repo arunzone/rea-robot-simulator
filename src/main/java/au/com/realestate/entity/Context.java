@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(staticName = "of")
 public class Context {
   @NonNull
-  private Coordinates boundary;
+  private final Coordinates boundary;
   private Position position;
 
   public Coordinates getBoundary() {

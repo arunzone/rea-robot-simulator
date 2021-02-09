@@ -8,27 +8,24 @@ import java.util.List;
 import static java.lang.String.format;
 
 public class FileRepository implements CommandRepository{
-  private final String inputFileName;
 
-  public FileRepository(String inputFileName) {
-    this.inputFileName = inputFileName;
-  }
+  public static final String INPUT_FILE = "INPUT_FILE";
 
   @Override
   public List<String> read() {
+    String fileName = fileName();
     try {
-      Path path = Path.of(fileName());
+      Path path = Path.of(fileName);
       return Files.readAllLines(path);
     } catch (IOException e) {
-      throw  new InvalidInputFileException(format("Invalid input file: %s", inputFileName));
+      throw  new InvalidInputFileException(format("Invalid input file: %s", fileName));
     }
   }
 
   private String fileName() {
-    String fileName = "src/test/resources/input.txt";
-    if(inputFileName == null){
-      return fileName;
+    if(System.getenv().containsKey(INPUT_FILE)){
+      return System.getenv().get(INPUT_FILE);
     }
-    return inputFileName;
+    return "src/test/resources/input.txt";
   }
 }

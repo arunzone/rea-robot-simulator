@@ -1,5 +1,6 @@
 package au.com.realestate.repository;
 
+import com.github.stefanbirkner.systemlambda.SystemLambda;
 import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class FileRepositoryTest {
   @Test
   void shouldReturnDefaultFileContent() {
-    FileRepository fileRepository = new FileRepository(null);
+    FileRepository fileRepository = new FileRepository();
     List<String> commands = fileRepository.read();
 
     assertThat(commands, IsIterableContainingInOrder.contains(
@@ -25,9 +26,10 @@ class FileRepositoryTest {
   }
 
   @Test
-  void shouldReturnGivenFileContent() {
-    FileRepository fileRepository = new FileRepository("src/test/resources/simple-input.txt");
-    List<String> commands = fileRepository.read();
+  void shouldReturnGivenFileContent() throws Exception {
+    FileRepository fileRepository = new FileRepository();
+    List<String> commands = SystemLambda.withEnvironmentVariable(FileRepository.INPUT_FILE, "src/test/resources/simple-input.txt")
+        .execute(() -> fileRepository.read());
 
     assertThat(commands, IsIterableContainingInOrder.contains(
         "PLACE 0,0,NORTH",
@@ -37,10 +39,11 @@ class FileRepositoryTest {
 
   @Test
   void shouldThrowExceptionWhenNotAFile() {
-    FileRepository fileRepository = new FileRepository("unavailable");
+    FileRepository fileRepository = new FileRepository();
 
     InvalidInputFileException invalidInputFileException = assertThrows(InvalidInputFileException.class, () -> {
-      fileRepository.read();
+      SystemLambda.withEnvironmentVariable(FileRepository.INPUT_FILE, "unavailable")
+          .execute(() -> fileRepository.read());
     });
 
     assertThat(invalidInputFileException.getMessage(), is("Invalid input file: unavailable"));

@@ -26,7 +26,7 @@ public class App {
     }
 
     private static List<String> commandInputs() {
-        CommandService service = new CommandService(new FileRepository(null), new CommandFilter());
+        CommandService service = new CommandService(new FileRepository(), new CommandFilter());
         return service.getAllCommands();
     }
 }
